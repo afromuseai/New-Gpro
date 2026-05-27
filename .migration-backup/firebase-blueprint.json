@@ -1,0 +1,207 @@
+
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a registered user of the GrowthPulse Pro platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User (Firebase Auth UID)."
+        },
+        "email": {
+          "type": "string",
+          "description": "The primary email address of the user.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["commander", "operator", "admin"],
+          "description": "The administrative role of the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "createdAt"
+      ]
+    },
+    "Subscription": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Subscription",
+      "type": "object",
+      "description": "Represents an industrial license for fleet scaling.",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "tier": { "type": "string", "enum": ["Sovereign", "Elite", "Pro"] },
+        "status": { "type": "string", "enum": ["active", "past_due", "canceled"] },
+        "nodeLimit": { "type": "number" },
+        "currentNodes": { "type": "number" },
+        "billingCycle": { "type": "string", "enum": ["monthly", "annual"] },
+        "nextBillingDate": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "tier", "status"]
+    },
+    "SocialAccount": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SocialAccount",
+      "type": "object",
+      "description": "Stores credentials and metadata for a connected social media platform.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string",
+          "enum": ["instagram", "twitter", "tiktok", "youtube", "linkedin"]
+        },
+        "platformUsername": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        },
+        "apiSecret": {
+          "type": "string"
+        },
+        "connectionStatus": {
+          "type": "string",
+          "enum": ["active", "expired", "pending"]
+        },
+        "followersCount": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "platform",
+        "connectionStatus",
+        "createdAt"
+      ]
+    },
+    "Campaign": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Campaign",
+      "type": "object",
+      "description": "Represents an active growth campaign deployed to the 100M node fleet.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "targetUrl": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["followers", "likes", "views"]
+        },
+        "goal": {
+          "type": "number"
+        },
+        "progress": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Active", "Completed", "Paused"]
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["simulation", "production"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "targetUrl",
+        "platform",
+        "type",
+        "goal",
+        "status",
+        "mode",
+        "createdAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "User profile root."
+        }
+      },
+      {
+        "path": "/users/{userId}/socialAccounts/{accountId}",
+        "definition": {
+          "entityName": "SocialAccount",
+          "schema": {
+            "$ref": "#/backend/entities/SocialAccount"
+          },
+          "description": "Connected API credentials."
+        }
+      },
+      {
+        "path": "/users/{userId}/campaigns/{campaignId}",
+        "definition": {
+          "entityName": "Campaign",
+          "schema": {
+            "$ref": "#/backend/entities/Campaign"
+          },
+          "description": "Industrial growth campaigns."
+        }
+      },
+      {
+        "path": "/users/{userId}/subscriptions/{subscriptionId}",
+        "definition": {
+          "entityName": "Subscription",
+          "schema": {
+            "$ref": "#/backend/entities/Subscription"
+          },
+          "description": "Fleet scaling licenses."
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "GrowthPulse Pro"
+version = "1.0.0"
+id = "artifacts/growthpulse"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25830
+
+[services.development]
+run = "pnpm --filter @workspace/growthpulse run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/growthpulse", "run", "build" ]
+publicDir = "artifacts/growthpulse/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25830"
+BASE_PATH = "/"

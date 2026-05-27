@@ -1,0 +1,35 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "avatar-commander",
+      "description": "Elite industrial commander avatar",
+      "imageUrl": "https://picsum.photos/seed/commander/200/200",
+      "imageHint": "officer profile"
+    },
+    {
+      "id": "avatar-bot-1",
+      "description": "High-fidelity AI persona avatar",
+      "imageUrl": "https://picsum.photos/seed/node1/200/200",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "avatar-bot-2",
+      "description": "High-fidelity AI persona avatar",
+      "imageUrl": "https://picsum.photos/seed/node2/200/200",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "dashboard-analytics",
+      "description": "Industrial data grid visualization",
+      "imageUrl": "https://picsum.photos/seed/grid/1200/600",
+      "imageHint": "network nodes"
+    },
+    {
+      "id": "media-fallback",
+      "description": "Cinematic visual placeholder",
+      "imageUrl": "https://picsum.photos/seed/cinematic/800/450",
+      "imageHint": "cyberpunk city"
+    }
+  ]
+}
